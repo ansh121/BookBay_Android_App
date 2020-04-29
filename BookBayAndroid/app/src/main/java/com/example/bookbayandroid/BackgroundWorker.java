@@ -95,6 +95,13 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 }
 
             }
+            else if(type.equals("home")) {
+                String username = params[1];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
 
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -113,11 +120,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             httpURLConnection.disconnect();
 
             if(result.equals("login success")){
-                String user_name = params[1];
+                String username = params[1];
                 String password = params[2];
-                SharedPreferences sp=context.getSharedPreferences("Login", context.MODE_PRIVATE);
+                SharedPreferences sp=context.getSharedPreferences("userdetails", context.MODE_PRIVATE);
                 SharedPreferences.Editor Ed=sp.edit();
-                Ed.putString("username",user_name );
+                Ed.putString("username",username );
                 Ed.putString("password",password);
                 Ed.commit();
 
@@ -138,6 +145,29 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 result = "Invalid Data";
                 return  result;
             }
+            else if(type.equals("home")){
+                Log.d("myTag Userdetails", result);
+                if(result.equals("user details access failure")){
+                    return result;
+                }
+                String[] details = result.split(",");
+                SharedPreferences sp=context.getSharedPreferences("userdetails", context.MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("name",details[1]);
+                Ed.putString("email",details[2]);
+                Ed.putString("houseno",details[3]);
+                Ed.putString("street",details[4]);
+                Ed.putString("locality",details[5]);
+                Ed.putString("postalcode",details[6]);
+                Ed.putString("landmark",details[7]);
+                Ed.putString("city",details[8]);
+                Ed.putString("state",details[9]);
+                Ed.commit();
+
+                result="not to pop";
+                return result;
+            }
+
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -163,8 +193,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String result) {
         //if(type.equals("login")){
-        alertDialog.setMessage(result);
-        alertDialog.show();
+        if(result!=null && !(result.equals("not to pop"))){
+            alertDialog.setMessage(result);
+            alertDialog.show();
+        }
+
         //}
     }
 

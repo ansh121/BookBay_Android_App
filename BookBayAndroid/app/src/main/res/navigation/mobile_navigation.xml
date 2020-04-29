@@ -30,14 +30,22 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.bookbayandroid.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_myaccount"
+        android:name="com.example.bookbayandroid.ui.myaccount.MyAccountFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_myaccount" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.bookbayandroid.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_mybooks"
+        android:name="com.example.bookbayandroid.ui.mybooks.MyBooksFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_mybooks" />
+
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.example.bookbayandroid.ui.logout.LogoutFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_logout" />
+
 </navigation>

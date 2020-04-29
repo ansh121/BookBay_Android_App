@@ -1,5 +1,6 @@
 package com.example.bookbayandroid;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,12 +43,13 @@ public class NavDrawer extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_myaccount, R.id.nav_mybooks, R.id.nav_pendingrequests, R.id.nav_history, R.id.nav_contact, R.id.nav_about, R.id.nav_logout)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
     @Override
@@ -55,19 +57,19 @@ public class NavDrawer extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.nav_drawer, menu);
 
+        SharedPreferences sp1=this.getSharedPreferences("userdetails", MODE_PRIVATE);
+        String username=sp1.getString("username", null);
+
         String type = "home";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        //backgroundWorker.execute(type, username, password);
+        backgroundWorker.execute(type, username);
 
-        SharedPreferences sp1=this.getSharedPreferences("Login", MODE_PRIVATE);
-
-        String username=sp1.getString("username", null);
-        String password = sp1.getString("password", null);
+        String mail=sp1.getString("email", null);
 
         TextView name_id = (TextView) findViewById(R.id.name_id);
         name_id.setText(username);
         TextView email = (TextView) findViewById(R.id.email);
-        email.setText("e1@gmail.");
+        email.setText(mail);
         return true;
     }
 
@@ -76,5 +78,16 @@ public class NavDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void logout(View view){
+        SharedPreferences sp1=this.getSharedPreferences("userdetails", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp1.edit();
+        editor.clear();
+        editor.apply();
+        finish();
+
+        Intent LoginIntent = new Intent(this,MainActivity.class);
+        startActivity(LoginIntent);
     }
 }

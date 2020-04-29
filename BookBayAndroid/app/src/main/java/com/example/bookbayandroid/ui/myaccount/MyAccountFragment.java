@@ -1,4 +1,4 @@
-package com.example.bookbayandroid.ui.gallery;
+package com.example.bookbayandroid.ui.myaccount;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bookbayandroid.R;
 
-public class GalleryFragment extends Fragment {
+public class MyAccountFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    private MyAccountViewModel myaccountViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        myaccountViewModel =
+                ViewModelProviders.of(this).get(MyAccountViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_myaccount, container, false);
+        final TextView textView = root.findViewById(R.id.text_myaccount);
+        myaccountViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

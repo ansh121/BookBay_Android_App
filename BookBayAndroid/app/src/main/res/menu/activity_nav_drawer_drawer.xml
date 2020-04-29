@@ -9,11 +9,15 @@
             android:icon="@drawable/home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_myaccount"
+            android:icon="@drawable/myaccount"
+            android:title="My Account" />
+        <item
+            android:id="@+id/nav_mybooks"
             android:icon="@drawable/mybooks"
             android:title="My Books" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_pendingrequests"
             android:icon="@drawable/pendingrequests"
             android:title="Pending Requests" />
         <item
