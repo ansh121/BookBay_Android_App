@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/nav_mybooks"
-        android:name="com.example.bookbayandroid.ui.mybooks.MyBooksFragment"
+        android:name="com.example.bookbayandroid.MyBooksFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_mybooks" />
 

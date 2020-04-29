@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -19,6 +20,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class BackgroundWorker extends AsyncTask<String,Void,String> {
     Context context;
     AlertDialog alertDialog;
@@ -28,7 +31,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    public String doInBackground(String... params) {
         type = params[0];
         String result="";
         String login_url = "http://192.168.43.87/queries.php";//mobile
@@ -102,6 +105,34 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                         +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8");
                 bufferedWriter.write(post_data);
             }
+            else if(type.equals("addbook")) {
+                SharedPreferences sp1=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                String username=sp1.getString("username", null);
+
+                String isbn = params[1];
+                String repaymethod = params[2];
+                String availability = params[3];
+                String otherspec = params[4];
+                String securitymoney = params[5];
+
+                Log.d("myTagavailable", availability);
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8")+"&"
+                        +URLEncoder.encode("isbn","UTF-8")+"="+URLEncoder.encode(isbn,"UTF-8")+"&"
+                        +URLEncoder.encode("repaymethod","UTF-8")+"="+URLEncoder.encode(repaymethod,"UTF-8")+"&"
+                        +URLEncoder.encode("availability","UTF-8")+"="+URLEncoder.encode(availability,"UTF-8")+"&"
+                        +URLEncoder.encode("otherspec","UTF-8")+"="+URLEncoder.encode(otherspec,"UTF-8")+"&"
+                        +URLEncoder.encode("securitymoney","UTF-8")+"="+URLEncoder.encode(securitymoney,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("mybooks")) {
+                String username = params[1];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
 
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -122,7 +153,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             if(result.equals("login success")){
                 String username = params[1];
                 String password = params[2];
-                SharedPreferences sp=context.getSharedPreferences("userdetails", context.MODE_PRIVATE);
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
                 SharedPreferences.Editor Ed=sp.edit();
                 Ed.putString("username",username );
                 Ed.putString("password",password);
@@ -150,8 +181,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 if(result.equals("user details access failure")){
                     return result;
                 }
-                String[] details = result.split(",");
-                SharedPreferences sp=context.getSharedPreferences("userdetails", context.MODE_PRIVATE);
+                String[] details = result.split(":");
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
                 SharedPreferences.Editor Ed=sp.edit();
                 Ed.putString("name",details[1]);
                 Ed.putString("email",details[2]);
@@ -162,8 +193,20 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 Ed.putString("landmark",details[7]);
                 Ed.putString("city",details[8]);
                 Ed.putString("state",details[9]);
+                Ed.putString("mobileno",details[10]);
                 Ed.commit();
 
+                result="not to pop";
+                return result;
+            }
+            else if(type.equals("addbook")){
+                return result;
+            }
+            else if(type.equals("mybooks")) {
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("mybooks",result);
+                Ed.commit();
                 result="not to pop";
                 return result;
             }
@@ -183,7 +226,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     }
 
     @Override
-    protected void onPreExecute() {
+    public void onPreExecute() {
         alertDialog = new AlertDialog.Builder(context).create();
         if(type.equals("login")) {
             alertDialog.setTitle("Login Status");
@@ -191,18 +234,29 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    public void onPostExecute(String result) {
         //if(type.equals("login")){
         if(result!=null && !(result.equals("not to pop"))){
             alertDialog.setMessage(result);
             alertDialog.show();
         }
 
+        if(result!=null && result.equals("Book Added Successfully")){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    // Actions to do after 5 seconds
+                    Intent mybookIntent = new Intent(context, MyBooksFragment.class);
+                    context.startActivity(mybookIntent);
+                }
+            }, 1500);
+        }
+
         //}
     }
 
     @Override
-    protected void onProgressUpdate(Void... values) {
+    public void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
 }

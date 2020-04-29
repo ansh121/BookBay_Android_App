@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddBook">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:id="@+id/scroll1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="173dp"
+                android:layout_height="97dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20px"
+                app:srcCompat="@drawable/bookbaylogo" />
+
+            <TextView
+                android:id="@+id/label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="please provide book details ..."
+                android:textColor="#575757"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/textView_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="ISBN"
+                android:textColor="#292929"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editText_ISBN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="13 digit ISBN number"
+                android:inputType="number" />
+
+
+            <TextView
+                android:id="@+id/textView_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Repayment Method"
+                android:textColor="#292929"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editText_repaymethod"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Repay Method in case of book loss"
+                android:inputType="textEmailAddress" />
+
+            <Switch
+                android:id="@+id/availability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="10dp"
+                android:text="Availability"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView_houseno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Other Specifications"
+                android:textColor="#292929"
+                android:textSize="16sp"
+                />
+
+            <EditText
+                android:id="@+id/editText_otherspec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Book Condition, mark, sharing terms, etc."/>
+
+
+            <TextView
+                android:id="@+id/textView_street"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Security Money of Book (in Rs)"
+                android:textColor="#292929"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editText_securitymoney"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Rs. 0 by default"
+                android:inputType="number" />
+
+
+            <Button
+                android:id="@+id/button_addbook"
+                android:layout_width="190dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="#FFC107"
+                android:ellipsize="middle"
+                android:padding="3dp"
+                android:text="Add Book"
+                app:backgroundTint="#FFC107" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
