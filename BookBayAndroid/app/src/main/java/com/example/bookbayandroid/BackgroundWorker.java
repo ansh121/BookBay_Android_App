@@ -133,6 +133,28 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                         +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8");
                 bufferedWriter.write(post_data);
             }
+            else if(type.equals("updatebook")) {
+                SharedPreferences sp1=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                String username=sp1.getString("username", null);
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8")+"&"
+                        +URLEncoder.encode("isbn","UTF-8")+"="+URLEncoder.encode(params[1],"UTF-8")+"&"
+                        +URLEncoder.encode("repaymethod","UTF-8")+"="+URLEncoder.encode(params[2],"UTF-8")+"&"
+                        +URLEncoder.encode("otherspec","UTF-8")+"="+URLEncoder.encode(params[3],"UTF-8")+"&"
+                        +URLEncoder.encode("availability","UTF-8")+"="+URLEncoder.encode(params[4],"UTF-8")+"&"
+                        +URLEncoder.encode("securitymoney","UTF-8")+"="+URLEncoder.encode(params[5],"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("deletebook")) {
+                SharedPreferences sp1=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                String username=sp1.getString("username", null);
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8")+"&"
+                        +URLEncoder.encode("isbn","UTF-8")+"="+URLEncoder.encode(params[1],"UTF-8");
+                bufferedWriter.write(post_data);
+            }
 
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -210,6 +232,24 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 result="not to pop";
                 return result;
             }
+            else if(type.equals("updatebook")) {
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("mybooks",result);
+                Ed.commit();
+                result="Book Updated Successfully";
+                return result;
+
+            }
+            else if(type.equals("deletebook")) {
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("mybooks",result);
+                Ed.commit();
+                result="Book Deleted Successfully";
+                return result;
+
+            }
 
 
         } catch (MalformedURLException e) {
@@ -249,7 +289,18 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                     Intent mybookIntent = new Intent(context, MyBooksFragment.class);
                     context.startActivity(mybookIntent);
                 }
-            }, 1500);
+            }, 1000);
+        }
+
+        if(result!=null && (result.equals("Book Deleted Successfully") || result.equals("Book Updated Successfully"))){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    // Actions to do after 5 seconds
+                    Intent MyBooksIntent = new Intent(context, MyBooksFragment.class);
+                    context.startActivity(MyBooksIntent);
+                }
+            }, 1000);
         }
 
         //}

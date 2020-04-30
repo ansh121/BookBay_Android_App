@@ -73,7 +73,14 @@ public class MyBooksFragment extends Fragment {
             int i;
             for(i=0;i<book.length;i++){
                 String[] params = book[i].split(":");
-                arrayList.add(new MyBooksData(params[7], params[9],params[5],params[8],params[10],params[1]));
+                String available="";
+                if(params[1].equals("1")){
+                    available="Yes";
+                }
+                else{
+                    available="No";
+                }
+                arrayList.add(new MyBooksData(params[7], params[9],params[5],params[8],params[10],available));
             }
             CustomAdapterMyBooks customAdapter = new CustomAdapterMyBooks(root.getContext(), arrayList);
             list.setAdapter(customAdapter);

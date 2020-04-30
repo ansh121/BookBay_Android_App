@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddBook"></activity>
+        <activity android:name=".ViewBook"></activity>
+        <activity android:name=".AddBook" />
+        <activity android:name=".MyBooksFragment" />
         <activity
             android:name=".NavDrawer"
             android:label="@string/title_activity_nav_drawer"
@@ -24,9 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

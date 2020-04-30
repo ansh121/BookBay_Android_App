@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -80,5 +81,17 @@ public class NavDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void bookdetail(View view){
+        TextView mTextisbn = (TextView) view.findViewById(R.id.isbn);
+        String isbn = (String) mTextisbn.getText().toString();
+        Log.d("myTag",isbn);
+        SharedPreferences sp=view.getContext().getSharedPreferences("userdetails", MODE_PRIVATE);
+        SharedPreferences.Editor Ed=sp.edit();
+        Ed.putString("viewbookisbn",isbn);
+        Ed.commit();
+        Intent viewbookIntent = new Intent(view.getContext(),ViewBook.class);
+        startActivity(viewbookIntent);
     }
 }
