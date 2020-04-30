@@ -94,4 +94,29 @@ public class NavDrawer extends AppCompatActivity {
         Intent viewbookIntent = new Intent(view.getContext(),ViewBook.class);
         startActivity(viewbookIntent);
     }
+
+    public void userwithbook(View view){
+        TextView mTextisbn = (TextView) view.findViewById(R.id.isbn);
+        String isbn = (String) mTextisbn.getText().toString();
+        Log.d("myTag userwithbook",isbn);
+        SharedPreferences sp=view.getContext().getSharedPreferences("userdetails", MODE_PRIVATE);
+        SharedPreferences.Editor Ed=sp.edit();
+        Ed.putString("bookdetailisbn",isbn);
+        Ed.commit();
+        Intent bookdetailIntent = new Intent(view.getContext(),BookDetail.class);
+        startActivity(bookdetailIntent);
+    }
+
+    public void viewincomingrequest(View view){
+        TextView mTextrequestid = (TextView) view.findViewById(R.id.requestid);
+        String requestid = (String) mTextrequestid.getText().toString();
+        Log.d("myTag ViewIncomingRequest",requestid);
+
+        SharedPreferences sp=view.getContext().getSharedPreferences("userdetails", MODE_PRIVATE);
+        SharedPreferences.Editor Ed=sp.edit();
+        Ed.putString("incomingrequestid",requestid);
+        Ed.commit();
+        Intent viewrequestIntent = new Intent(view.getContext(),ViewIncomingRequest.class);
+        startActivity(viewrequestIntent);
+    }
 }

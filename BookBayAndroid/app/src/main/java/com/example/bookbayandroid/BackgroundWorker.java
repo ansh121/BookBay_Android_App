@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+
+import androidx.fragment.app.Fragment;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,6 +22,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.Date;
+
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -155,6 +161,82 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                         +URLEncoder.encode("isbn","UTF-8")+"="+URLEncoder.encode(params[1],"UTF-8");
                 bufferedWriter.write(post_data);
             }
+            else if(type.equals("updateaccount")){
+                String username = params[1];
+                String email = params[2];
+                String name = params[3];
+                String houseno = params[4];
+                String street = params[5];
+                String locality = params[6];
+                String postalcode = params[7];
+                String landmark = params[8];
+                String city = params[9];
+                String state = params[10];
+                String mobileno = params[11];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8")+"&"
+                        +URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"
+                        +URLEncoder.encode("name","UTF-8")+"="+URLEncoder.encode(name,"UTF-8")+"&"
+                        +URLEncoder.encode("houseno","UTF-8")+"="+URLEncoder.encode(houseno,"UTF-8")+"&"
+                        +URLEncoder.encode("street","UTF-8")+"="+URLEncoder.encode(street,"UTF-8")+"&"
+                        +URLEncoder.encode("locality","UTF-8")+"="+URLEncoder.encode(locality,"UTF-8")+"&"
+                        +URLEncoder.encode("postalcode","UTF-8")+"="+URLEncoder.encode(postalcode,"UTF-8")+"&"
+                        +URLEncoder.encode("landmark","UTF-8")+"="+URLEncoder.encode(landmark,"UTF-8")+"&"
+                        +URLEncoder.encode("city","UTF-8")+"="+URLEncoder.encode(city,"UTF-8")+"&"
+                        +URLEncoder.encode("state","UTF-8")+"="+URLEncoder.encode(state,"UTF-8")+"&"
+                        +URLEncoder.encode("mobileno","UTF-8")+"="+URLEncoder.encode(mobileno,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("pendingrequests")) {
+                String username = params[1];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("search")) {
+                String query = params[1];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("query","UTF-8")+"="+URLEncoder.encode(query,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("bookdetail")) {
+                String isbn = params[1];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("isbn","UTF-8")+"="+URLEncoder.encode(isbn,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("requestpage")) {
+                String isbn = params[1];
+                String username = params[2];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("isbn","UTF-8")+"="+URLEncoder.encode(isbn,"UTF-8")+"&"
+                        +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("makerequest")) {
+                SharedPreferences sp1=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                String username=sp1.getString("username", null);
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("message","UTF-8")+"="+URLEncoder.encode(params[2],"UTF-8")+"&"
+                        +URLEncoder.encode("borrowduration","UTF-8")+"="+URLEncoder.encode(params[1],"UTF-8")+"&"
+                        +URLEncoder.encode("userid","UTF-8")+"="+URLEncoder.encode(username,"UTF-8")+"&"
+                        +URLEncoder.encode("isbn","UTF-8")+"="+URLEncoder.encode(params[3],"UTF-8")+"&"
+                        +URLEncoder.encode("requesteduserid","UTF-8")+"="+URLEncoder.encode(params[4],"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("acceptrequest")) {
+                String requestid = params[1];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("requestid","UTF-8")+"="+URLEncoder.encode(requestid,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
 
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -250,9 +332,72 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 return result;
 
             }
+            else if(type.equals("updateaccount")){
+                Log.d("myTag Userdetailupdated", result);
+                if(result.equals("user details access failure")){
+                    return result;
+                }
+                String[] details = result.split(":");
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("name",details[1]);
+                Ed.putString("email",details[2]);
+                Ed.putString("houseno",details[3]);
+                Ed.putString("street",details[4]);
+                Ed.putString("locality",details[5]);
+                Ed.putString("postalcode",details[6]);
+                Ed.putString("landmark",details[7]);
+                Ed.putString("city",details[8]);
+                Ed.putString("state",details[9]);
+                Ed.putString("mobileno",details[10]);
+                Ed.commit();
 
+                result="Account Details Updated";
+                return result;
+            }
+            else if(type.equals("pendingrequests")) {
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("pendingrequests",result);
+                Ed.commit();
+                result="not to pop";
+                return result;
+            }
+            else if(type.equals("search")) {
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("searchresult",result);
+                Log.d("myTag search",result);
+                Ed.commit();
+                result="not to pop";
+                return result;
+            }
+            else if(type.equals("bookdetail")) {
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("bookdetail",result);
+                Log.d("myTag bookdetail",result);
+                Ed.commit();
+                result="not to pop";
+                return result;
+            }
+            else if(type.equals("requestpage")) {
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("requestpage",result);
+                Log.d("myTag requestpage",result);
+                Ed.commit();
+                result="not to pop";
+                return result;
+            }
+            else if(type.equals("makerequest")) {
+                return result;
+            }
+            else if(type.equals("acceptrequest")) {
+                return result;
+            }
 
-        } catch (MalformedURLException e) {
+            } catch (MalformedURLException e) {
             e.printStackTrace();
             result="Connection Error";
             return result;
@@ -292,7 +437,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             }, 1000);
         }
 
-        if(result!=null && (result.equals("Book Deleted Successfully") || result.equals("Book Updated Successfully"))){
+        else if(result!=null && (result.equals("Book Deleted Successfully") || result.equals("Book Updated Successfully"))){
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
@@ -303,6 +448,39 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             }, 1000);
         }
 
+        else if(result!=null && result.equals("Account Details Updated")){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    // Actions to do after 5 seconds
+                    alertDialog.dismiss();
+                }
+            }, 1000);
+        }
+
+        else if(result!=null && result.equals("Book requested submitted")){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    // Actions to do after 5 seconds
+                    Intent requestIntent = new Intent(context, RequestUser.class);
+                    context.startActivity(requestIntent);
+
+                }
+            }, 1000);
+        }
+
+        else if(result!=null && result.equals("Request Accepted")){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    // Actions to do after 5 seconds
+                    Fragment fragment = new PendingRequestsFragment();
+                    Intent pendingrequestIntent = new Intent(context, NavDrawer.class);
+                    context.startActivity(pendingrequestIntent);
+                }
+            }, 1000);
+        }
         //}
     }
 

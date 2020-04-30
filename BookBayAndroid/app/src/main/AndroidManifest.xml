@@ -12,9 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".HomeFragment"></activity>
+        <activity android:name=".PendingRequestsFragment"></activity>
+        <activity android:name=".ViewIncomingRequest"></activity>
+        <activity android:name=".RequestUser"></activity>
         <activity android:name=".ViewBook"></activity>
+        <activity android:name=".BookDetail"></activity>
         <activity android:name=".AddBook" />
         <activity android:name=".MyBooksFragment" />
+        <activity android:name=".MyAccountFragment" />
         <activity
             android:name=".NavDrawer"
             android:label="@string/title_activity_nav_drawer"

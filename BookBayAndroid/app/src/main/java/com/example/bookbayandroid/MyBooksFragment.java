@@ -1,5 +1,6 @@
 package com.example.bookbayandroid;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,25 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
-import com.example.bookbayandroid.AddBook;
-import com.example.bookbayandroid.BackgroundWorker;
-import com.example.bookbayandroid.CustomAdapterMyBooks;
-import com.example.bookbayandroid.MyBooksData;
-import com.example.bookbayandroid.NavDrawer;
-import com.example.bookbayandroid.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.os.Bundle;
-import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import static android.content.Context.MODE_PRIVATE;
@@ -64,7 +50,9 @@ public class MyBooksFragment extends Fragment {
 
         String books=sp1.getString("mybooks", null);
         if(books.equals("No Book Added!")){
-
+            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+            alertDialog.setMessage(books);
+            alertDialog.show();
         }
         else {
             String[] book = books.split(";");

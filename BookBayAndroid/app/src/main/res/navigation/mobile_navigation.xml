@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.bookbayandroid.ui.home.HomeFragment"
+        android:name="com.example.bookbayandroid.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_myaccount"
-        android:name="com.example.bookbayandroid.ui.myaccount.MyAccountFragment"
+        android:name="com.example.bookbayandroid.MyAccountFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_myaccount" />
 
@@ -41,10 +41,16 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_mybooks" />
 
+    <fragment
+        android:id="@+id/nav_pendingrequests"
+        android:name="com.example.bookbayandroid.PendingRequestsFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_pendingrequests" />
+
 
     <fragment
         android:id="@+id/nav_logout"
-        android:name="com.example.bookbayandroid.ui.logout.LogoutFragment"
+        android:name="com.example.bookbayandroid.LogoutFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_logout" />
 

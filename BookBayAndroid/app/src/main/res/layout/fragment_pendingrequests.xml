@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PendingRequestsFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="333dp"
+            android:layout_margin="5dp"
+            android:background="#1D856400"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/booktextView7"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_margin="3dp"
+                android:background="#FFC107"
+                android:gravity="center"
+                android:text="Incoming Requests"
+                android:textSize="16sp" />
+
+            <ListView
+                android:id="@+id/list1"
+                android:layout_width="wrap_content"
+                android:layout_height="273dp"
+                android:divider="#000"
+                android:dividerHeight="1dp"
+                android:footerDividersEnabled="true"
+                android:headerDividersEnabled="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#1D856400"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/booktextView8"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_margin="3dp"
+                android:background="#FFC107"
+                android:gravity="center"
+                android:text="Outgoing Requests"
+                android:textSize="16sp" />
+
+            <ListView
+                android:id="@+id/list2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="#000"
+                android:dividerHeight="1dp"
+                android:footerDividersEnabled="true"
+                android:headerDividersEnabled="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
