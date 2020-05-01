@@ -1,44 +1,32 @@
 package com.example.bookbayandroid;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ViewIncomingRequest extends AppCompatActivity {
+public class ViewOutgoingRequest  extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewincomingrequest);
+        setContentView(R.layout.activity_viewoutgoingrequest);
         setTitle("Request");
 
-        Button save = findViewById(R.id.button_accept);
+        Button save = findViewById(R.id.button_cancel);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                acceptrequest(view);
-            }
-        });
-
-        Button delete = findViewById(R.id.button_decline);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                declinerequest(view);
+                cancelrequest(view);
             }
         });
 
         SharedPreferences sp1=this.getSharedPreferences("userdetails", MODE_PRIVATE);
-        String requestid=sp1.getString("incomingrequestid", null);
+        String requestid=sp1.getString("outgoingrequestid", null);
         String requests=sp1.getString("pendingrequests", null);
 
         String[] book = requests.split(";");
@@ -75,7 +63,7 @@ public class ViewIncomingRequest extends AppCompatActivity {
                 TextView name=findViewById(R.id.name);
                 name.setText(params[16]);
                 TextView userid=findViewById(R.id.userid);
-                userid.setText(params[7]);
+                userid.setText(params[9]);
                 TextView requestid2=findViewById(R.id.requestid);
                 requestid2.setText(params[4]);
                 TextView dateofrequest=findViewById(R.id.dateofrequest);
@@ -90,25 +78,15 @@ public class ViewIncomingRequest extends AppCompatActivity {
         }
     }
 
-    public void acceptrequest(View view){
+    public void cancelrequest(View view){
         TextView requestid2=findViewById(R.id.requestid);
         String requestid = requestid2.getText().toString();
 
-        String type = "acceptrequest";
+        String type = "cancelrequest";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, requestid);
     }
-
-    public void declinerequest(View view){
-        TextView requestid2=findViewById(R.id.requestid);
-        String requestid = requestid2.getText().toString();
-
-        String type = "declinerequest";
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, requestid);
-    }
-
-
 
 }
+
 

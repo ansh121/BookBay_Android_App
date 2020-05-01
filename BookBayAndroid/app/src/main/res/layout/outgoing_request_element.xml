@@ -13,9 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:clickable="true"
-        android:onClick="bookdetail"
+        android:onClick="viewoutgoingrequest"
         android:orientation="horizontal"
         android:padding="5dp">
+
+        <TextView
+            android:id="@+id/flag"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0"
+            android:text="default" />
 
         <LinearLayout
             android:layout_width="wrap_content"

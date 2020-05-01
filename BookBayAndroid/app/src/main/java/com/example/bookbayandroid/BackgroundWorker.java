@@ -237,6 +237,27 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                         +URLEncoder.encode("requestid","UTF-8")+"="+URLEncoder.encode(requestid,"UTF-8");
                 bufferedWriter.write(post_data);
             }
+            else if(type.equals("declinerequest")) {
+                String requestid = params[1];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("requestid","UTF-8")+"="+URLEncoder.encode(requestid,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("cancelrequest")) {
+                String requestid = params[1];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("requestid","UTF-8")+"="+URLEncoder.encode(requestid,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
+            else if(type.equals("history")) {
+                String username = params[1];
+
+                String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
+                        +URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8");
+                bufferedWriter.write(post_data);
+            }
 
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -396,6 +417,20 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             else if(type.equals("acceptrequest")) {
                 return result;
             }
+            else if(type.equals("declinerequest")) {
+                return result;
+            }
+            else if(type.equals("cancelrequest")) {
+                return result;
+            }
+            else if(type.equals("history")) {
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("history",result);
+                Ed.commit();
+                result="not to pop";
+                return result;
+            }
 
             } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -431,18 +466,18 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     // Actions to do after 5 seconds
-                    Intent mybookIntent = new Intent(context, MyBooksFragment.class);
+                    Intent mybookIntent = new Intent(context, NavDrawer.class);
                     context.startActivity(mybookIntent);
                 }
             }, 1000);
         }
 
-        else if(result!=null && (result.equals("Book Deleted Successfully") || result.equals("Book Updated Successfully"))){
+        else if(result!=null && (result.equals("Book Deleted Successfully"))){
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
                     // Actions to do after 5 seconds
-                    Intent MyBooksIntent = new Intent(context, MyBooksFragment.class);
+                    Intent MyBooksIntent = new Intent(context, NavDrawer.class);
                     context.startActivity(MyBooksIntent);
                 }
             }, 1000);
@@ -462,15 +497,12 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    // Actions to do after 5 seconds
-                    Intent requestIntent = new Intent(context, RequestUser.class);
-                    context.startActivity(requestIntent);
-
+                    alertDialog.dismiss();
                 }
             }, 1000);
         }
 
-        else if(result!=null && result.equals("Request Accepted")){
+        else if(result!=null && (result.equals("Request Accepted") || result.equals("Request Declined") || result.equals("Request Canceled"))){
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {

@@ -13,8 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".HomeFragment"></activity>
+        <activity android:name=".ViewOutgoingCancelRequest"></activity>
+        <activity android:name=".ViewOutgoingAcceptRequest"></activity>
+        <activity android:name=".ViewOutgoingDeclineRequest"></activity>
+        <activity android:name=".ViewIncomingAcceptRequest"></activity>
+        <activity android:name=".ViewIncomingCancelRequest"></activity>
+        <activity android:name=".ViewIncomingDeclineRequest"></activity>
         <activity android:name=".PendingRequestsFragment"></activity>
         <activity android:name=".ViewIncomingRequest"></activity>
+        <activity android:name=".ViewOutgoingRequest"></activity>
         <activity android:name=".RequestUser"></activity>
         <activity android:name=".ViewBook"></activity>
         <activity android:name=".BookDetail"></activity>
@@ -25,14 +32,16 @@
             android:name=".NavDrawer"
             android:label="@string/title_activity_nav_drawer"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

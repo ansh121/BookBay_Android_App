@@ -20,6 +20,13 @@
             android:dividerHeight="1dp"
             android:footerDividersEnabled="true"
             android:headerDividersEnabled="false" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="@android:color/secondary_text_light_nodisable" />
+
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

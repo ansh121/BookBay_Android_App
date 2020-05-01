@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.bookbayandroid.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="Search"
         tools:layout="@layout/fragment_home">
 
         <action
@@ -32,20 +32,26 @@
     <fragment
         android:id="@+id/nav_myaccount"
         android:name="com.example.bookbayandroid.MyAccountFragment"
-        android:label="@string/menu_gallery"
+        android:label="My Account"
         tools:layout="@layout/fragment_myaccount" />
 
     <fragment
         android:id="@+id/nav_mybooks"
         android:name="com.example.bookbayandroid.MyBooksFragment"
-        android:label="@string/menu_slideshow"
+        android:label="My Books"
         tools:layout="@layout/fragment_mybooks" />
 
     <fragment
         android:id="@+id/nav_pendingrequests"
         android:name="com.example.bookbayandroid.PendingRequestsFragment"
-        android:label="@string/menu_slideshow"
+        android:label="Pending Requests"
         tools:layout="@layout/fragment_pendingrequests" />
+
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="com.example.bookbayandroid.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history" />
 
 
     <fragment
@@ -53,5 +59,12 @@
         android:name="com.example.bookbayandroid.LogoutFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_logout" />
+
+    <activity
+        android:id="@+id/bookDetail"
+        android:name="com.example.bookbayandroid.BookDetail"
+        android:label="BookDetail"
+        tools:layout="@layout/activity_bookdetail" />
+
 
 </navigation>

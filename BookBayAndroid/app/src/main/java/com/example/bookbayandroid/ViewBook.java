@@ -20,6 +20,7 @@ public class ViewBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewbook);
+        setTitle("Book");
 
         Button save = findViewById(R.id.button_save);
         save.setOnClickListener(new View.OnClickListener() {

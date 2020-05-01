@@ -40,6 +40,7 @@ public class RequestUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requestuser);
+        setTitle("Request Book");
 
         mtextbookname = findViewById(R.id.bookname);
         mtextname = findViewById(R.id.ownername);
@@ -61,7 +62,13 @@ public class RequestUser extends AppCompatActivity {
         makerequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                makerequest(view);
+                try {
+                    makerequest(view);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -111,15 +118,16 @@ public class RequestUser extends AppCompatActivity {
         ownerid=params[0];
     }
 
-    public void makerequest(View view){
+    public void makerequest(View view) throws ExecutionException, InterruptedException {
         String borrowduration = mtextborrowduration.getText().toString();
         String message = mtextmessage.getText().toString();
 
 
         String type = "makerequest";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, borrowduration, message, bookisbn, ownerid);
+        String str_result = backgroundWorker.execute(type, borrowduration, message, bookisbn, ownerid).get();
 
-
+        mtextborrowduration.setText("");
+        mtextmessage.setText("");
     }
 }

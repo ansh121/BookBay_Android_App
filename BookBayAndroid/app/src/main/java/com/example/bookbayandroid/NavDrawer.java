@@ -2,11 +2,15 @@ package com.example.bookbayandroid;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,6 +72,7 @@ public class NavDrawer extends AppCompatActivity {
         }
 
         TextView name_id = (TextView) findViewById(R.id.name_id);
+        username=sp1.getString("username", null);
         name_id.setText(username);
 
         TextView email = (TextView) findViewById(R.id.email);
@@ -110,13 +115,77 @@ public class NavDrawer extends AppCompatActivity {
     public void viewincomingrequest(View view){
         TextView mTextrequestid = (TextView) view.findViewById(R.id.requestid);
         String requestid = (String) mTextrequestid.getText().toString();
-        Log.d("myTag ViewIncomingRequest",requestid);
+        Log.d("myTag IncomingRequest",requestid);
+
+        TextView mtextflag = view.findViewById(R.id.flag);
+        String flag = mtextflag.getText().toString();
 
         SharedPreferences sp=view.getContext().getSharedPreferences("userdetails", MODE_PRIVATE);
         SharedPreferences.Editor Ed=sp.edit();
-        Ed.putString("incomingrequestid",requestid);
-        Ed.commit();
-        Intent viewrequestIntent = new Intent(view.getContext(),ViewIncomingRequest.class);
-        startActivity(viewrequestIntent);
+        if(flag.equals("default")){
+            Ed.putString("incomingrequestid",requestid);
+            Ed.commit();
+            Intent viewrequestIntent = new Intent(view.getContext(),ViewIncomingRequest.class);
+            startActivity(viewrequestIntent);
+        }
+        else if(flag.equals("accept")){
+            Ed.putString("incomingacceptrequestid",requestid);
+            Ed.commit();
+            Intent viewrequestIntent = new Intent(view.getContext(),ViewIncomingAcceptRequest.class);
+            startActivity(viewrequestIntent);
+        }
+        else if(flag.equals("decline")){
+            Ed.putString("incomingdeclinerequestid",requestid);
+            Ed.commit();
+            Intent viewrequestIntent = new Intent(view.getContext(),ViewIncomingDeclineRequest.class);
+            startActivity(viewrequestIntent);
+        }
+        else if(flag.equals("cancel")){
+            Ed.putString("incomingcancelrequestid",requestid);
+            Ed.commit();
+            Intent viewrequestIntent = new Intent(view.getContext(),ViewIncomingCancelRequest.class);
+            startActivity(viewrequestIntent);
+        }
+
+        //String imgname = img.getTag().toString();
+        //Log.d("myTag",imgname);
     }
+
+    public void viewoutgoingrequest(View view){
+        TextView mTextrequestid = (TextView) view.findViewById(R.id.requestid);
+        String requestid = (String) mTextrequestid.getText().toString();
+        Log.d("myTag OutgoingRequest",requestid);
+
+        TextView mtextflag = view.findViewById(R.id.flag);
+        String flag = mtextflag.getText().toString();
+
+        SharedPreferences sp=view.getContext().getSharedPreferences("userdetails", MODE_PRIVATE);
+        SharedPreferences.Editor Ed=sp.edit();
+
+        if(flag.equals("default")){
+            Ed.putString("outgoingrequestid",requestid);
+            Ed.commit();
+            Intent viewrequestIntent = new Intent(view.getContext(),ViewOutgoingRequest.class);
+            startActivity(viewrequestIntent);
+        }
+        else if(flag.equals("accept")){
+            Ed.putString("outgoingacceptrequestid",requestid);
+            Ed.commit();
+            Intent viewrequestIntent = new Intent(view.getContext(),ViewOutgoingAcceptRequest.class);
+            startActivity(viewrequestIntent);
+        }
+        else if(flag.equals("decline")){
+            Ed.putString("outgoingdeclinerequestid",requestid);
+            Ed.commit();
+            Intent viewrequestIntent = new Intent(view.getContext(),ViewOutgoingDeclineRequest.class);
+            startActivity(viewrequestIntent);
+        }
+        else if(flag.equals("cancel")){
+            Ed.putString("outgoingcancelrequestid",requestid);
+            Ed.commit();
+            Intent viewrequestIntent = new Intent(view.getContext(),ViewOutgoingCancelRequest.class);
+            startActivity(viewrequestIntent);
+        }
+    }
+
 }

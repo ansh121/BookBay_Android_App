@@ -2,6 +2,7 @@ package com.example.bookbayandroid;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 //import com.squareup.picasso.Picasso;
+import androidx.annotation.DrawableRes;
+
 import java.util.ArrayList;
 
 public class CustomAdapterIncomingRequest implements ListAdapter {
@@ -63,9 +66,24 @@ public class CustomAdapterIncomingRequest implements ListAdapter {
             convertView=layoutInflater.inflate(R.layout.incoming_request_element, null);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v){
                 }
             });
+            ImageView logo = convertView.findViewById(R.id.logo);
+            TextView mtextflag = convertView.findViewById(R.id.flag);
+            if(subjectData.flag.equals("1")) {
+                logo.setImageResource(R.drawable.bookbaylogoaccept);
+                mtextflag.setText("accept");
+            }
+            else if(subjectData.flag.equals("-1")) {
+                logo.setImageResource(R.drawable.bookbaylogodecline);
+                mtextflag.setText("decline");
+            }
+            else if(subjectData.flag.equals("-2")) {
+                logo.setImageResource(R.drawable.bookbaylogocancel);
+                mtextflag.setText("cancel");
+            }
+
             TextView requestid=convertView.findViewById(R.id.requestid);
             requestid.setText(subjectData.requestid);
             TextView bookname=convertView.findViewById(R.id.bookname);

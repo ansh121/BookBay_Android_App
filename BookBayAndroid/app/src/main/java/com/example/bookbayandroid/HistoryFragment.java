@@ -9,30 +9,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class PendingRequestsFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_pendingrequests, container, false);
+        View root = inflater.inflate(R.layout.fragment_history, container, false);
 
         SharedPreferences sp1=getContext().getSharedPreferences("userdetails", MODE_PRIVATE);
         String username=sp1.getString("username", null);
 
-        Log.d("myTag",username);
-
-        String type = "pendingrequests";
+        String type = "history";
         BackgroundWorker backgroundWorker = new BackgroundWorker(getContext());
         try {
             String str_result = backgroundWorker.execute(type,username).get();
@@ -42,26 +39,22 @@ public class PendingRequestsFragment extends Fragment {
             e.printStackTrace();
         }
 
-        String requests=sp1.getString("pendingrequests", null);
+        String requests=sp1.getString("history", null);
         if(requests.equals("No request found!")){
             AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
             alertDialog.setMessage(requests);
             alertDialog.show();
         }
         else {
-            Log.d("myTag",requests);
             String[] book = requests.split(";");
             final ListView list1 = root.findViewById(R.id.list1);
             final ListView list2 = root.findViewById(R.id.list2);
             ArrayList<IncomingRequestData> arrayListincoming = new ArrayList<IncomingRequestData>();
             ArrayList<IncomingRequestData> arrayListoutgoing = new ArrayList<IncomingRequestData>();
-            int i,j;
+            int i;
             for(i=0;i<book.length;i++){
                 String[] params = book[i].split(":");
-                Log.d("myTag",username+params[9]+book[i]);
-                if(username.equals(params[9])) {
-                    arrayListincoming.add(new IncomingRequestData(params[4], params[11],params[8],params[16],params[15],params[0]+":"+params[1]+":"+params[2],params[5],params[6]));
-                }
+                if(username.equals(params[9]))arrayListincoming.add(new IncomingRequestData(params[4], params[11],params[8],params[16],params[15],params[0]+":"+params[1]+":"+params[2],params[5],params[6]));
                 else arrayListoutgoing.add(new IncomingRequestData(params[4], params[11],params[8],params[16],params[15],params[0]+":"+params[1]+":"+params[2],params[5],params[6]));
             }
             CustomAdapterIncomingRequest customAdapterin = new CustomAdapterIncomingRequest(root.getContext(), arrayListincoming);
@@ -72,4 +65,5 @@ public class PendingRequestsFragment extends Fragment {
 
         return root;
     }
+
 }

@@ -25,6 +25,7 @@ public class BookDetail extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_bookdetail);
+            setTitle("Book Detail");
 
             mtextbookname = findViewById(R.id.bookname);
             mtextauthors = findViewById(R.id.authors);
