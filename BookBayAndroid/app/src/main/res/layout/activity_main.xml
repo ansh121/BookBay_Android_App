@@ -37,6 +37,7 @@
         android:drawableLeft="@drawable/username"
         android:drawablePadding="10dp"
         android:hint="Username"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColorHint="#989898"
         android:textSize="16sp" />
@@ -52,6 +53,7 @@
         android:drawablePadding="10dp"
         android:hint="Password"
         android:inputType="textPassword"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="16dp"
         android:theme="@style/AppTheme" />

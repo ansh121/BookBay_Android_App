@@ -222,6 +222,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 SharedPreferences sp1=context.getSharedPreferences("userdetails", MODE_PRIVATE);
                 String username=sp1.getString("username", null);
 
+                if(params[4].equals(username)){
+                    result = "You are the owner of this book";
+                    return result;
+                }
+
                 String post_data = URLEncoder.encode("type","UTF-8")+"="+URLEncoder.encode(type,"UTF-8")+"&"
                         +URLEncoder.encode("message","UTF-8")+"="+URLEncoder.encode(params[2],"UTF-8")+"&"
                         +URLEncoder.encode("borrowduration","UTF-8")+"="+URLEncoder.encode(params[1],"UTF-8")+"&"

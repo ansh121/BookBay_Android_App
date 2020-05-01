@@ -53,6 +53,17 @@
         android:label="History"
         tools:layout="@layout/fragment_history" />
 
+    <fragment
+        android:id="@+id/nav_contact"
+        android:name="com.example.bookbayandroid.ContactFragment"
+        android:label="Contact"
+        tools:layout="@layout/fragment_contact" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.example.bookbayandroid.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/nav_logout"

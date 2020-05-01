@@ -304,7 +304,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint=" (in days)"
-            android:inputType="textEmailAddress"
+            android:inputType="number"
             android:textColor="#505050"
             android:textSize="15sp" />
 
