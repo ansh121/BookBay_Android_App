@@ -11,4 +11,6 @@
  * import database schema (book_bay) using command : source '<path to schema.sql provided>'
  * Open BookBay_Android_App\XAMPP htdocs folder files\conn.php
  * replace username and password with your mysql credentials
+ * open htdocs folder in your XAMPP installation directoy
+ * copy php files from BookBay_Android_App\XAMPP htdocs folder files to above mentioned directory
  * Run app using Android Studio
