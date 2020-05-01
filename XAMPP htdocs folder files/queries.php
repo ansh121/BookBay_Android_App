@@ -16,7 +16,7 @@
 			$string = $string.$temp;
 			$string = $string.$seperate;
 		}
-		return "$string";
+		return substr("$string",0,-1);
 		
 	}
 
@@ -246,7 +246,7 @@
 		$username=$_POST["username"];
 		//$user_name="u1";
 		//$user_pass="123";
-		$mysql_qry="select * from request as r, book as b, user as u , my_books as mb where r.ISBN = b.ISBN and r.Requested_User_ID = '$username' and u.User_ID = r.User_ID and r.ISBN = mb.ISBN and mb.User_ID = '$username' and r.completion_flag = '0';";
+		$mysql_qry="select * from request as r, book as b, user as u , my_books as mb where r.ISBN = b.ISBN and r.Requested_User_ID = '$username' and u.User_ID = r.User_ID and r.ISBN = mb.ISBN and mb.User_ID = '$username' and r.completion_flag = '0' order by r.Date_of_Request;";
 		$result=mysqli_query($conn ,$mysql_qry);
 		if(mysqli_num_rows($result) > 0){
 			$incoming = multiplequery($result);
@@ -255,7 +255,7 @@
 			$incoming = "";
 		}
 
-		$mysql_qry="select * from request as r, book as b, user as u, my_books as mb where r.ISBN = b.ISBN and r.User_ID = '$username' and u.User_ID = r.Requested_User_ID and r.ISBN = mb.ISBN and mb.User_ID = r.Requested_User_ID and r.completion_flag = '0';";
+		$mysql_qry="select * from request as r, book as b, user as u, my_books as mb where r.ISBN = b.ISBN and r.User_ID = '$username' and u.User_ID = r.Requested_User_ID and r.ISBN = mb.ISBN and mb.User_ID = r.Requested_User_ID and r.completion_flag = '0' order by r.Date_of_Request;";
 		$result=mysqli_query($conn ,$mysql_qry);
 		if(mysqli_num_rows($result) > 0){
 			$outgoing = multiplequery($result);
@@ -374,7 +374,83 @@
 			echo "Request Accepted";	
 		}
 		else{
-			echo "Error in accepting!";
+			echo "Error in accepting request!";
 		}
 	}	
+	else if($type == "declinerequest"){
+		$requestid=$_POST["requestid"];
+		//$user_name="u1";
+		//$user_pass="123";
+
+		$mysql_qry="update request set completion_flag = '-1' where Request_ID = '$requestid';";
+		$result=mysqli_query($conn ,$mysql_qry);
+
+		if($result){
+			echo "Request Declined";	
+		}
+		else{
+			echo "Error in declining request!";
+		}
+	}
+	else if($type == "cancelrequest"){
+		$requestid=$_POST["requestid"];
+		//$user_name="u1";
+		//$user_pass="123";
+
+		$mysql_qry="update request set completion_flag = '-2' where Request_ID = '$requestid';";
+		$result=mysqli_query($conn ,$mysql_qry);
+
+		if($result){
+			echo "Request Canceled";	
+		}
+		else{
+			echo "Error in canceling request!";
+		}
+	}	
+	else if($type == "history"){
+		$username=$_POST["username"];
+		//$user_name="u1";
+		//$user_pass="123";
+		$mysql_qry="select * from request as r, book as b, user as u , my_books as mb, user_phone_number as upn where r.ISBN = b.ISBN and r.Requested_User_ID = '$username' and u.User_ID = r.User_ID and r.ISBN = mb.ISBN and mb.User_ID = '$username' and r.completion_flag <> '0' and upn.User_ID = u.User_ID order by r.Date_of_Request;";
+		$result=mysqli_query($conn ,$mysql_qry);
+		if(mysqli_num_rows($result) > 0){
+			$incoming = multiplequery($result);
+		}
+		else{
+			$incoming = "";
+		}
+
+		$mysql_qry="select * from request as r, book as b, user as u, my_books as mb, user_phone_number as upn where r.ISBN = b.ISBN and r.User_ID = '$username' and u.User_ID = r.Requested_User_ID and r.ISBN = mb.ISBN and mb.User_ID = r.Requested_User_ID and r.completion_flag <> '0' and upn.User_ID = u.User_ID order by r.Date_of_Request;";
+		$result=mysqli_query($conn ,$mysql_qry);
+		if(mysqli_num_rows($result) > 0){
+			$outgoing = multiplequery($result);
+		}
+		else{
+			$outgoing = "";
+		}
+
+		$requests = "";
+
+
+		if($incoming == "") {
+			if($outgoing == ""){
+				echo "No request found!";
+				
+			}
+			else{
+				echo "$outgoing";
+			}
+		}
+		else{
+			if($outgoing == ""){
+				echo "$incoming";
+				
+			}
+			else{
+				$requests = $incoming.";";
+				$requests = $requests.$outgoing;
+				echo "$requests";
+			}
+		}
+	}
 ?>
