@@ -76,6 +76,10 @@
         android:name="com.example.bookbayandroid.BookDetail"
         android:label="BookDetail"
         tools:layout="@layout/activity_bookdetail" />
+    <activity
+        android:id="@+id/viewIncomingRequest"
+        android:name="com.example.bookbayandroid.ViewIncomingRequest"
+        android:label="ViewIncomingRequest" />
 
 
 </navigation>

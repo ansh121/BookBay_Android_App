@@ -108,4 +108,6 @@ public class MyAccountFragment extends Fragment {
         BackgroundWorker backgroundWorker = new BackgroundWorker(view.getContext());
         backgroundWorker.execute(type, user_name, email, name, houseno, street, locality, postalcode, landmark, city, state, mobileno);
     }
+
+
 }

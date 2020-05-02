@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.concurrent.ExecutionException;
+
 public class ViewOutgoingRequest  extends AppCompatActivity {
 
     @Override
@@ -21,7 +23,13 @@ public class ViewOutgoingRequest  extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cancelrequest(view);
+                try {
+                    cancelrequest(view);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -78,13 +86,15 @@ public class ViewOutgoingRequest  extends AppCompatActivity {
         }
     }
 
-    public void cancelrequest(View view){
+    public void cancelrequest(View view) throws ExecutionException, InterruptedException {
         TextView requestid2=findViewById(R.id.requestid);
         String requestid = requestid2.getText().toString();
 
         String type = "cancelrequest";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, requestid);
+        String wait = backgroundWorker.execute(type, requestid).get();
+
+        finish();
     }
 
 }

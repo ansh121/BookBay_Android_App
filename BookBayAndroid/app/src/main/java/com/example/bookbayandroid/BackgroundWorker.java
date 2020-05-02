@@ -40,7 +40,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     public String doInBackground(String... params) {
         type = params[0];
         String result="";
-        String login_url = "http://192.168.43.87/queries.php";//mobile
+        String ip=context.getString(R.string.ip);
+        String login_url = "http://"+ip+"/queries.php";//mobile
         //String login_url = "http://192.168.137.1/queries.php";//
         //String login_url = "http://127.0.0.1/queries.php";
         //String login_url = "https://neuropterous-carloa.000webhostapp.com/conn.php";
@@ -287,6 +288,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 SharedPreferences.Editor Ed=sp.edit();
                 Ed.putString("username",username );
                 Ed.putString("password",password);
+                Ed.putString("loginstatus","success");
                 Ed.commit();
 
                 Intent accountsIntent = new Intent(context, NavDrawer.class);
@@ -294,16 +296,22 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             }
             else if(result.equals("login failure")){
                 result = "Invalid Credentials";
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("loginstatus","fail");
                 return  result;
             }
             else if(result.equals("signup success")){
-                //result = "signup success";
-                //return result;
-                Intent accountsIntent = new Intent(context, MainActivity.class);
-                context.startActivity(accountsIntent);
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("signupstatus","success");
+                return result;
             }
             else if(result.equals("signup failure")){
                 result = "Invalid Data";
+                SharedPreferences sp=context.getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                Ed.putString("signupstatus","fail");
                 return  result;
             }
             else if(type.equals("home")){
@@ -471,24 +479,18 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     // Actions to do after 5 seconds
-                    Intent mybookIntent = new Intent(context, NavDrawer.class);
-                    context.startActivity(mybookIntent);
                 }
             }, 1000);
         }
-
         else if(result!=null && (result.equals("Book Deleted Successfully"))){
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
                     // Actions to do after 5 seconds
-                    Intent MyBooksIntent = new Intent(context, NavDrawer.class);
-                    context.startActivity(MyBooksIntent);
                 }
             }, 1000);
         }
-
-        else if(result!=null && result.equals("Account Details Updated")){
+        else if(result!=null && (result.equals("signup success") || result.equals("Account Details Updated") || result.equals("Book Updated Successfully"))){
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
@@ -497,7 +499,6 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 }
             }, 1000);
         }
-
         else if(result!=null && result.equals("Book requested submitted")){
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -506,15 +507,11 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 }
             }, 1000);
         }
-
         else if(result!=null && (result.equals("Request Accepted") || result.equals("Request Declined") || result.equals("Request Canceled"))){
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
                     // Actions to do after 5 seconds
-                    Fragment fragment = new PendingRequestsFragment();
-                    Intent pendingrequestIntent = new Intent(context, NavDrawer.class);
-                    context.startActivity(pendingrequestIntent);
                 }
             }, 1000);
         }

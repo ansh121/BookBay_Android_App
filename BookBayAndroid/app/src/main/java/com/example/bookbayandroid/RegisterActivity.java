@@ -1,13 +1,19 @@
 package com.example.bookbayandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText mTextUsername;
@@ -50,21 +56,28 @@ public class RegisterActivity extends AppCompatActivity {
         mTextViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent LoginIntent = new Intent(RegisterActivity.this,MainActivity.class);
-                startActivity(LoginIntent);
+                finish();
             }
         });
 
         mButtonRegister.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                OnSignup(view);
+                try {
+                    OnSignup(view);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (TimeoutException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
     }
 
-    public void OnSignup(View view) {
+    public void OnSignup(View view) throws ExecutionException, InterruptedException, TimeoutException {
         String user_name = mTextUsername.getText().toString();
         String email = mTextEmail.getText().toString();
         String name = mTextName.getText().toString();
@@ -81,6 +94,12 @@ public class RegisterActivity extends AppCompatActivity {
         String type = "signup";
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, user_name, email, name, houseno, street, locality, postalcode, landmark, city, state, mobileno, password, cnfpassword);
+        String wait = backgroundWorker.execute(type, user_name, email, name, houseno, street, locality, postalcode, landmark, city, state, mobileno, password, cnfpassword).get(1000, TimeUnit.MILLISECONDS);
+
+        SharedPreferences sp=getSharedPreferences("userdetails", MODE_PRIVATE);
+        String status = sp.getString("signupstatus",null);
+        if(status!=null && status.equals("success")){
+            finish();
+        }
     }
 }

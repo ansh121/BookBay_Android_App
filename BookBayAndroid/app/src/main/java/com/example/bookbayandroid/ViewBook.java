@@ -13,6 +13,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class ViewBook extends AppCompatActivity {
 
@@ -34,7 +35,13 @@ public class ViewBook extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deletebook(view);
+                try {
+                    deletebook(view);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -78,6 +85,7 @@ public class ViewBook extends AppCompatActivity {
         }
     }
 
+
     public void updatebook(View view){
         Switch av = findViewById(R.id.availability);
         boolean flag = av.isChecked();
@@ -102,13 +110,15 @@ public class ViewBook extends AppCompatActivity {
         backgroundWorker.execute(type, isbn, repaymethod, otherspec, availability,secmoney);
     }
 
-    public void deletebook(View view){
+    public void deletebook(View view) throws ExecutionException, InterruptedException {
         TextView mtextisbn = findViewById(R.id.isbn);
         String isbn = mtextisbn.getText().toString();
 
         String type = "deletebook";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, isbn);
+        String wait=backgroundWorker.execute(type, isbn).get();
+
+        finish();
     }
 
 }

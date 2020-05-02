@@ -41,6 +41,7 @@ public class NavDrawer extends AppCompatActivity {
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -86,6 +87,10 @@ public class NavDrawer extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
+
+
 
     public void bookdetail(View view){
         TextView mTextisbn = (TextView) view.findViewById(R.id.isbn);

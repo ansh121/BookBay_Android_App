@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import java.util.concurrent.ExecutionException;
+
 public class AddBook extends AppCompatActivity {
 
     EditText mTextisbn,mTextrepaymethod,mTextotherspec,mTextsecuritymoney;
@@ -29,13 +31,19 @@ public class AddBook extends AppCompatActivity {
         mButtonsignup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                OnAddBook(view);
+                try {
+                    OnAddBook(view);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
     }
 
-    public void OnAddBook(View view){
+    public void OnAddBook(View view) throws ExecutionException, InterruptedException {
         String isbn = mTextisbn.getText().toString();
         String repaymethod = mTextrepaymethod.getText().toString();
         boolean flag = mSwitchavailability.isChecked();
@@ -52,6 +60,7 @@ public class AddBook extends AppCompatActivity {
         String type = "addbook";
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type,isbn,repaymethod,availability,otherspec,securitymoney);
+        String wait = backgroundWorker.execute(type,isbn,repaymethod,availability,otherspec,securitymoney).get();
+
     }
 }

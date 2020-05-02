@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.concurrent.ExecutionException;
+
 public class ViewIncomingRequest extends AppCompatActivity {
 
     @Override
@@ -25,7 +27,13 @@ public class ViewIncomingRequest extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                acceptrequest(view);
+                try {
+                    acceptrequest(view);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -33,7 +41,13 @@ public class ViewIncomingRequest extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                declinerequest(view);
+                try {
+                    declinerequest(view);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -90,22 +104,26 @@ public class ViewIncomingRequest extends AppCompatActivity {
         }
     }
 
-    public void acceptrequest(View view){
+    public void acceptrequest(View view) throws ExecutionException, InterruptedException {
         TextView requestid2=findViewById(R.id.requestid);
         String requestid = requestid2.getText().toString();
 
         String type = "acceptrequest";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, requestid);
+        String wait=backgroundWorker.execute(type, requestid).get();
+
+        finish();
     }
 
-    public void declinerequest(View view){
+    public void declinerequest(View view) throws ExecutionException, InterruptedException {
         TextView requestid2=findViewById(R.id.requestid);
         String requestid = requestid2.getText().toString();
 
         String type = "declinerequest";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type, requestid);
+        String wait=backgroundWorker.execute(type, requestid).get();
+
+        finish();
     }
 
 
