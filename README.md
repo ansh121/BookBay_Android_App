@@ -6,6 +6,8 @@
  * Connect your laptop to your mobile hotspot (Turn on Data)
  * Open 'BookBay_Android_App\BookBayAndroid\app\src\main\res\xml\network_security_config.xml'
  * add your laptop ip address
+ * Open 'D:\BookBay_Android_App\BookBayAndroid\app\src\main\res\values\strings.xml'
+ * replqce last string having nam 'ip' with your laptop ip address
  * open XAMPP control panel and start MySQL and Apache Server
  * open mysql from cmd using command:mysql -u 'your_username' -p
  * import database schema (book_bay) using command : source 'path to schema.sql provided'
