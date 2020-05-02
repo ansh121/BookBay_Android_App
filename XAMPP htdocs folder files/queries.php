@@ -110,7 +110,7 @@
 		$json = json_decode($str, true);
 
 		if($json['totalItems'] == 0){
-			echo "Book not available ISBN database";
+			echo "Book not available in ISBN database";
 		}
 		else{
 			if(array_key_exists("title",$json['items'][0]['volumeInfo'])){
