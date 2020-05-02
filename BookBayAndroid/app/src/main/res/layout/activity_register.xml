@@ -60,8 +60,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890@#$%^*"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -87,7 +89,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -112,7 +115,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -136,7 +140,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -160,7 +165,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -184,7 +190,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -209,7 +216,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -233,7 +241,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -257,7 +266,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -281,7 +291,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -306,7 +317,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -332,7 +344,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
@@ -358,7 +371,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
 
             </LinearLayout>
 
